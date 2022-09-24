@@ -1,0 +1,68 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Lightning.gd" type="Script" id=1]
+[ext_resource path="res://LightningTexture.png" type="Texture" id=2]
+
+[sub_resource type="Curve" id=4]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.554545 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="Animation" id=2]
+resource_name = "Flash"
+length = 0.4
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Line2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.05, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Line2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Environment" id=1]
+background_mode = 4
+glow_enabled = true
+glow_intensity = 1.29
+glow_strength = 1.43
+glow_blend_mode = 0
+
+[node name="Lightning" type="Node2D"]
+position = Vector2( 462, 83 )
+script = ExtResource( 1 )
+is_branch = true
+
+[node name="Line2D" type="Line2D" parent="."]
+points = PoolVector2Array( 0, -1, 88, 76 )
+width_curve = SubResource( 4 )
+default_color = Color( 1, 1, 1, 1 )
+texture = ExtResource( 2 )
+texture_mode = 2
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Flash = SubResource( 2 )
+anims/RESET = SubResource( 3 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 1 )
